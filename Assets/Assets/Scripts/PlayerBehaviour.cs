@@ -6,6 +6,10 @@ public class PlayerBehaviour : MonoBehaviour {
 	private float currentSpeed = 0.0f;
 	private Vector3 lastMovement = new Vector3 ();
 
+	public Transform laser;
+	public float laserDistance = 0.2f;
+	public float timeBetweenFires = 0.3f;
+	private float timeTilNextFire = 0.0f;
 
 	
 	// Update is called once per frame
