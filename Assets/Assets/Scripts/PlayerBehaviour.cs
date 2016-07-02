@@ -11,7 +11,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Rotation ();
-		//Movement ();
+		Movement ();
 	}
 
 	void Rotation() {
@@ -26,5 +26,23 @@ public class PlayerBehaviour : MonoBehaviour {
 		Quaternion rot = Quaternion.Euler(new Vector3(0,0, angle + 90));
 
 		this.transform.rotation = rot;
+	}
+
+	void Movement(){
+		Vector3 movement = new Vector3();
+
+		movement.x += Input.GetAxis("Horizontal");
+		movement.y += Input.GetAxis("Vertical");
+
+		movement.Normalize();
+
+		if(movement.magnitude > 0){
+			currentSpeed = playerSpeed;
+			this.transform.Translate(movement * Time.deltaTime * playerSpeed, Space.World);
+			lastMovement = movement;
+		} else {
+			this.transform.Translate(lastMovement * Time.deltaTime * currentSpeed, Space.World);
+			currentSpeed *= 0.99f;
+		}
 	}
 }
