@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour {
 	public float playerSpeed = 4.0f;
@@ -11,11 +12,35 @@ public class PlayerBehaviour : MonoBehaviour {
 	public float timeBetweenFires = 0.3f;
 	private float timeTilNextFire = 0.0f;
 
+	public List<KeyCode> shootButton;
+
 	
 	// Update is called once per frame
 	void Update () {
+		CheckFire ();
 		Rotation ();
 		Movement ();
+	}
+
+	void CheckFire(){
+		foreach (KeyCode element in shootButton) {
+			if (Input.GetKey (element) && timeTilNextFire < 0) {
+				timeTilNextFire = timeBetweenFires;
+				ShootLaser ();
+				break;
+			}
+		}
+
+		timeTilNextFire -= Time.deltaTime;
+	}
+
+	void ShootLaser(){
+		Vector3 laserPos = this.transform.position;
+		float rotationAngle = transform.localEulerAngles.z - 90;
+		laserPos.x += (Mathf.Cos ((rotationAngle) * Mathf.Deg2Rad) * - laserDistance);
+		laserPos.y += (Mathf.Sin ((rotationAngle) * Mathf.Deg2Rad) * - laserDistance);
+
+		Instantiate (laser, laserPos, this.transform.rotation);
 	}
 
 	void Rotation() {
