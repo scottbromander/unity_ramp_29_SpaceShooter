@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour {
 	public float playerSpeed = 4.0f;
+	public float playerDrag = 0.90f;
 	private float currentSpeed = 0.0f;
 	private Vector3 lastMovement = new Vector3 ();
 
@@ -71,7 +72,7 @@ public class PlayerBehaviour : MonoBehaviour {
 			lastMovement = movement;
 		} else {
 			this.transform.Translate(lastMovement * Time.deltaTime * currentSpeed, Space.World);
-			currentSpeed *= 0.99f;
+			currentSpeed *= playerDrag;
 		}
 	}
 }
