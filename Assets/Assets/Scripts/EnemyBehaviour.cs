@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyBehaviour : MonoBehaviour {
 	public int health = 2;
 	public Transform explosion;
+	public AudioClip hitSound;
 
 	void OnCollisionEnter2D(Collision2D theCollision){
 		
@@ -13,20 +14,19 @@ public class EnemyBehaviour : MonoBehaviour {
 			health -= laser.damage;
 			print ("Health: " + health);
 			Destroy (theCollision.gameObject);
+			GetComponent<AudioSource> ().PlayOneShot (hitSound);
 		}
 
 		if (health <= 0) {
-
 			if (explosion) {
 				GameObject exploder = ((Transform)Instantiate (explosion, this.transform.position, this.transform.rotation)).gameObject;
 				Destroy (exploder, 2.0f);
 			}
 
 			Destroy (this.gameObject);
+
 			GameController controller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 			controller.KilledEnemy ();
-
-
 		}
 	}
 
