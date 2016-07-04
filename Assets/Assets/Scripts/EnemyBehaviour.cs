@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 	public int health = 2;
+	public Transform explosion;
 
 	void OnCollisionEnter2D(Collision2D theCollision){
 		
@@ -15,10 +16,17 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 
 		if (health <= 0) {
-			print ("Dead");
+
+			if (explosion) {
+				GameObject exploder = ((Transform)Instantiate (explosion, this.transform.position, this.transform.rotation)).gameObject;
+				Destroy (exploder, 2.0f);
+			}
+
 			Destroy (this.gameObject);
 			GameController controller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 			controller.KilledEnemy ();
+
+
 		}
 	}
 
