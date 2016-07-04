@@ -10,12 +10,18 @@ public class GameController : MonoBehaviour {
 	public float timeBetweenEnemies = 0.25f;
 	public float timeBeforeWaves = 2.0f;
 
-	[Header("User Interface")]
 	private int score = 0;
 	private int waveNumber = 0;
 
+	[Header("Game Settings")]
+	public int playerStartingLives = 3;
+
+	private int playerLives = 0;
+
+	[Header("User Interface")]
 	public Text scoreText;
 	public Text waveText;
+	public Text livesText;
 
 	public int enemiesPerWave = 10;
 	private int currentNumberOfEnemies = 0;
@@ -23,6 +29,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(SpawnEnemies());
+		playerLives = playerStartingLives;
+		updateLivesText (playerLives);
 	}
 
 	IEnumerator SpawnEnemies() {
@@ -56,9 +64,28 @@ public class GameController : MonoBehaviour {
 		currentNumberOfEnemies--;
 	}
 
+	public void PlayerHit(){
+		print ("Player hit!");
+		playerLives--;
+		updateLivesText (playerLives);
+
+		if (playerLives <= 0) {
+			EndGame ();
+		}
+	}
+
+	private void updateLivesText(int lives){
+		livesText.text = "Lives: " + lives; 
+	}
+
 	public void IncreaseScore(int increase){
 		score += increase;
 		scoreText.text = "Score: " + score;
+	}
+
+	public void EndGame() {
+		GameObject player = GameObject.Find ("playerShip");
+		Destroy (player);
 	}
 	
 	// Update is called once per frame
