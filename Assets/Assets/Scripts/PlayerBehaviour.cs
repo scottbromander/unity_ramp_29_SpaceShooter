@@ -13,9 +13,16 @@ public class PlayerBehaviour : MonoBehaviour {
 	public float timeBetweenFires = 0.3f;
 	private float timeTilNextFire = 0.0f;
 
+	public AudioClip shootSound;
+	private AudioSource audioSource;
+
 	public List<KeyCode> shootButton;
 
-	
+	void Start() {
+		audioSource = GetComponent<AudioSource> ();
+	}
+
+
 	// Update is called once per frame
 	void Update () {
 		CheckFire ();
@@ -36,6 +43,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	}
 
 	void ShootLaser(){
+		audioSource.PlayOneShot (shootSound);
 		Vector3 laserPos = this.transform.position;
 		float rotationAngle = transform.localEulerAngles.z - 90;
 		laserPos.x += (Mathf.Cos ((rotationAngle) * Mathf.Deg2Rad) * - laserDistance);
