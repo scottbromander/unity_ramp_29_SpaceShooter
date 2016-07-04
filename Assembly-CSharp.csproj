@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Assets\Scripts\EnemyBehaviour.cs" />
+     <Compile Include="Assets\Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Assets\Scripts\LaserBehaviour.cs" />
      <Compile Include="Assets\Assets\Scripts\MoveTowardsPlayer.cs" />
      <Compile Include="Assets\Assets\Scripts\PlayerBehaviour.cs" />
