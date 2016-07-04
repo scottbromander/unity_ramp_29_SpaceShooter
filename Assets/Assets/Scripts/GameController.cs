@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	public Transform enemy;
@@ -8,6 +9,13 @@ public class GameController : MonoBehaviour {
 	public float timeBeforeSpawning = 1.5f;
 	public float timeBetweenEnemies = 0.25f;
 	public float timeBeforeWaves = 2.0f;
+
+	[Header("User Interface")]
+	private int score = 0;
+	private int waveNumber = 0;
+
+	public Text scoreText;
+	public Text waveText;
 
 	public int enemiesPerWave = 10;
 	private int currentNumberOfEnemies = 0;
@@ -22,6 +30,9 @@ public class GameController : MonoBehaviour {
 
 		while (true) {
 			if (currentNumberOfEnemies <= 0) {
+				waveNumber++;
+				waveText.text = "Wave: " + waveNumber;
+
 				for (int i = 0; i < enemiesPerWave; i++) {
 					float randDistance = Random.Range (10, 25);
 
@@ -43,6 +54,11 @@ public class GameController : MonoBehaviour {
 
 	public void KilledEnemy(){
 		currentNumberOfEnemies--;
+	}
+
+	public void IncreaseScore(int increase){
+		score += increase;
+		scoreText.text = "Score: " + score;
 	}
 	
 	// Update is called once per frame

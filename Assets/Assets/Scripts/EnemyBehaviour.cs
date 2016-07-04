@@ -27,6 +27,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 			GameController controller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 			controller.KilledEnemy ();
+			controller.IncreaseScore (10);
 		}
 	}
 
