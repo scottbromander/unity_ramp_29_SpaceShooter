@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 	public Transform enemy;
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour {
 
 	public int enemiesPerWave = 10;
 	private int currentNumberOfEnemies = 0;
+	private bool gameOver = false;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +38,7 @@ public class GameController : MonoBehaviour {
 	IEnumerator SpawnEnemies() {
 		yield return new WaitForSeconds (timeBeforeSpawning);
 
-		while (true) {
+		while (!gameOver) {
 			if (currentNumberOfEnemies <= 0) {
 				waveNumber++;
 				waveText.text = "Wave: " + waveNumber;
@@ -86,6 +88,12 @@ public class GameController : MonoBehaviour {
 	public void EndGame() {
 		GameObject player = GameObject.Find ("playerShip");
 		Destroy (player);
+		gameOver = true;
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enemy in enemies) {
+			Destroy (enemy);
+		}
 	}
 	
 	// Update is called once per frame
