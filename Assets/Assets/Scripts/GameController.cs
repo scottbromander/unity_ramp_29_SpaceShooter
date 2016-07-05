@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
 	public Text scoreText;
 	public Text waveText;
 	public Text livesText;
+	public Text gameOverText;
 
 	public int enemiesPerWave = 10;
 	private int currentNumberOfEnemies = 0;
@@ -30,6 +31,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameOverText.text = "";
 		StartCoroutine(SpawnEnemies());
 		playerLives = playerStartingLives;
 		updateLivesText (playerLives);
@@ -94,6 +96,11 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject enemy in enemies) {
 			Destroy (enemy);
 		}
+
+		scoreText.text = "";
+		waveText.text = "";
+		livesText.text = "";
+		gameOverText.text = "GAME OVER";
 	}
 	
 	// Update is called once per frame
