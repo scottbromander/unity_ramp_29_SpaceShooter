@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour {
 		scoreText.text = "";
 		waveText.text = "";
 		livesText.text = "";
-		gameOverText.text = "GAME OVER";
+		gameOverText.text = "GAME OVER\n" + "SCORE: " + score;
 	}
 	
 	// Update is called once per frame
